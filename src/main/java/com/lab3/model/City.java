@@ -39,4 +39,16 @@ public class City {
     public String getZipCode() {
         return zipCode;
     }
+
+;    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
 }
