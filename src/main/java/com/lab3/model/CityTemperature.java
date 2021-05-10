@@ -20,6 +20,13 @@ public class CityTemperature {
 
     public CityTemperature(double temperature) {
         super();
+        this.createDate = new Date();
+        this.temperature = temperature;
+    }
+
+    public CityTemperature(double temperature, Date date) {
+        super();
+        this.createDate = date;
         this.temperature = temperature;
     }
 

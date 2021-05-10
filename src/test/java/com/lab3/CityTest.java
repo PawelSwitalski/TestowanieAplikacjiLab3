@@ -66,6 +66,15 @@ public class CityTest {
         assertEquals("12345", newCity.get().getZipCode());
     }
 
+
+
+
+
+
+
+
+
+    /*
     @Test
     void averageDayTemperatureTest() {
         when(cityRepository.averageDayTemperature(anyLong(), any()))
@@ -75,10 +84,15 @@ public class CityTest {
     }
 
     @Test
+    void
+
+    @Test
     void deleteCityTest(){
         //when(cityRepository.deleteById(1L)).thenReturn(return null);
         cityRepository.deleteById(1L);
         assertNull(city);
     }
+
+     */
 
 }

@@ -1,6 +1,7 @@
 package com.lab3.services.impl;
 
 import com.lab3.model.City;
+import com.lab3.model.CityTemperature;
 import com.lab3.repository.CityRepository;
 import com.lab3.repository.CityTemperatureRepository;
 import com.lab3.services.CityService;
@@ -58,10 +59,23 @@ public class CityRepositoryImpl implements CityRepository {
     }
 
     @Override
+    public List<CityTemperature> cityTemperatures(Long id) {
+        return null;
+    }
+
+    /*
+    @Override
     public double averageDayTemperature(Long id, Date date) {
 
         return 0;
     }
+
+    @Override
+    public double averageMonthTemperature(Long id, short month) {
+        return 0;
+    }
+
+     */
 
     @Override
     public void delete(City city) {
