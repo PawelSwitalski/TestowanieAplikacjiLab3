@@ -16,9 +16,9 @@ public class City {
 
     protected City() {}
 
-    public City(String firstName, String lastName) {
-        this.cityName = firstName;
-        this.zipCode = lastName;
+    public City(String cityName, String zipCode) {
+        this.cityName = cityName;
+        this.zipCode = zipCode;
     }
 
     @Override
