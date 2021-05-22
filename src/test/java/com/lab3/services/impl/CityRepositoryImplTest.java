@@ -22,7 +22,7 @@ class CityRepositoryImplTest {
 
     @BeforeEach
     void setUp() {
-        cityRepository = new CityRepositoryImpl(new CityTemperatureImpl());
+        cityRepository = new CityRepositoryImpl();
         zielona = new City("Zielona Gora", "1234");
         city2 = new City("miasto2", "111");
         wroclaw = new City("Wroclaw", "123");

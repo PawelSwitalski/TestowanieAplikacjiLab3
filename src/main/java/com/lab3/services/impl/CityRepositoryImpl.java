@@ -11,12 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class CityRepositoryImpl implements CityRepository {
-    private final CityTemperatureRepository temperatureRep;
     Database db = new Database();
-
-    public CityRepositoryImpl(CityTemperatureRepository temperatureRep) {
-        this.temperatureRep = temperatureRep;
-    }
 
     @Override
     public Optional<City> findByZipCode(String zipCode) {
@@ -31,13 +26,25 @@ public class CityRepositoryImpl implements CityRepository {
     }
 
     @Override
-    public <S extends City> S save(S s) {
+    public City save(City s) {
+        /*
+        if (s.getId() == null){
+            Long lastId = db.getCityList().get(db.getCityList().size() - 1).getId() + 1;
+
+        }
+
+        return null;
+        */
+
+
         try {
             s.setId(db.getCityList().get(db.getCityList().size() - 1).getId() + 1);
+            db.getCityList().add(s);
+            return s;
         } catch (IndexOutOfBoundsException e){
             s.setId(1L);
         }
-        db.getCityList().add(s);
+        //db.getCityList().add(s);
         return null;
     }
 
@@ -45,7 +52,7 @@ public class CityRepositoryImpl implements CityRepository {
     public <S extends City> Iterable<S> saveAll(Iterable<S> iterable) {
         for (S city :
                 iterable) {
-            db.getCityList().add(city);
+            save(city);
         }
         return null;
     }
@@ -109,6 +116,15 @@ public class CityRepositoryImpl implements CityRepository {
 
     @Override
     public List<CityTemperature> cityTemperatures(Long id) {
+        List<CityTemperature> cityTemperatures = new LinkedList<>();
+        for (CityTemperature c :
+                db.getCityTemperatureList()) {
+            if (c.getCity().getId().equals(id))
+                cityTemperatures.add(c);
+        }
+
+        if (!cityTemperatures.isEmpty())
+            return cityTemperatures;
         return null;
     }
 

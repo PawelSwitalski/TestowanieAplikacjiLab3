@@ -6,30 +6,29 @@ import com.lab3.model.CityTemperature;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Database {
+public final class Database {
+
     public List<City> getCityList() {
         return cityList;
     }
 
-    public void setCityList(List<City> cityList) {
-        this.cityList = cityList;
-    }
 
     public List<CityTemperature> getCityTemperatureList() {
         return cityTemperatureList;
     }
 
-    public void setCityTemperatureList(List<CityTemperature> cityTemperatureList) {
-        this.cityTemperatureList = cityTemperatureList;
-    }
 
-    List<City> cityList;
-    List<CityTemperature> cityTemperatureList;
+
+
+    public final static List<City> cityList = new LinkedList<>();
+    public final static List<CityTemperature> cityTemperatureList = new LinkedList<>();
+
+
 
     public Database(){
-        cityList = new LinkedList<>();
-        cityTemperatureList = new LinkedList<>();
     }
+
+
 
 
 

@@ -13,7 +13,7 @@ public interface CityRepository{
     Optional<City> findByZipCode(String zipCode);
     void deleteById(Long id);
     List<CityTemperature> cityTemperatures(Long id);
-    public <S extends City> S save(S s);
+    public City save(City s);
     public <S extends City> Iterable<S> saveAll(Iterable<S> iterable);
     public Optional<City> findById(Long aLong);
     boolean existsById(Long aLong);

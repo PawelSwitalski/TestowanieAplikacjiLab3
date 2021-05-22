@@ -3,6 +3,10 @@ package com.lab3;
 import com.lab3.model.City;
 import com.lab3.model.CityTemperature;
 import com.lab3.repository.CityRepository;
+import com.lab3.repository.CityTemperatureRepository;
+import com.lab3.services.impl.CityRepositoryImpl;
+import com.lab3.services.impl.CityTemperatureImpl;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -17,16 +21,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
-class TemperatureCalculatorTest {
+class TemperatureCalculatorDBTest {
 
-    @Mock
-    CityRepository cityRepository;
+    CityRepository cityRepository = new CityRepositoryImpl();
+    CityTemperatureRepository cityTemperatureRepository = new CityTemperatureImpl();
 
     TemperatureCalculator calculator;
 
     City city;
 
     List<CityTemperature> cityTemperatures = new LinkedList<>();
+
 
     private final double temp1 = 23.3;
     private final double temp2 = 20;
@@ -83,10 +88,19 @@ class TemperatureCalculatorTest {
     void setUP() throws Exception {
         city = new City("Zielona", "12345");
         city.setId(1L);
+        cityRepository.save(city);
+        cityRepository.save(new City("Zielona2", "12345"));
+
         cityTemperatures = setUPTemperature();
-        MockitoAnnotations.initMocks(this);
-        calculator = new TemperatureCalculator(cityRepository);
-        when(cityRepository.cityTemperatures(anyLong())).thenReturn(cityTemperatures);
+        cityTemperatureRepository.saveAll(cityTemperatures);
+
+        calculator = new TemperatureCalculator(new CityRepositoryImpl());
+    }
+
+    @AfterEach
+    void reset(){
+        cityTemperatureRepository.deleteAll();
+        cityRepository.deleteAll();
     }
 
     @Test
@@ -96,8 +110,8 @@ class TemperatureCalculatorTest {
 
     @Test
     void dailyAverage2() {
-        cityTemperatures.add(new CityTemperature(30,
-                new Date(1999, Calendar.JULY, 10)));
+        CityTemperature cityTemperature = new CityTemperature(30,
+                new Date(1999, Calendar.JULY, 10));
 
         assertEquals(21.5, calculator.dailyAverage(city, new Date()));
     }
@@ -110,7 +124,9 @@ class TemperatureCalculatorTest {
     @Test
     void dailyHighestTemperatureTest2() {
         double tem = 40.9;
-        cityTemperatures.add(new CityTemperature(tem, new Date()));
+        CityTemperature cityTemperature = new CityTemperature(tem, new Date());
+        cityTemperature.setCity(city);
+        cityTemperatureRepository.save(cityTemperature);
         assertEquals(tem, calculator.dailyHighestTemperature(city, new Date()));
     }
 
@@ -136,7 +152,9 @@ class TemperatureCalculatorTest {
     @Test
     void dailyLowestTemperatureTest3() {
         double tem = -3.2;
-        cityTemperatures.add(new CityTemperature(tem, new Date()));
+        CityTemperature cityTemperature = new CityTemperature(tem, new Date());
+        cityTemperature.setCity(city);
+        cityTemperatureRepository.save(cityTemperature);
         assertEquals(tem, calculator.dailyLowestTemperature(city, new Date()));
     }
 
@@ -205,8 +223,13 @@ class TemperatureCalculatorTest {
     void biggerThanTest2() {
         List<CityTemperature> testList = new LinkedList<>();
 
-        cityTemperatures.add(new CityTemperature(40,
-                new Date(1999, Calendar.MAY, 5)));
+        //cityTemperatures.add(new CityTemperature(40,
+        //        new Date(1999, Calendar.MAY, 5)));
+        CityTemperature cityTemperature = new CityTemperature(40,
+                new Date(1999, Calendar.MAY, 5));
+        cityTemperature.setCity(city);
+        cityTemperatureRepository.save(cityTemperature);
+
 
         testList.add(new CityTemperature(30,
                 new Date(1999, Calendar.JULY, 10)));
